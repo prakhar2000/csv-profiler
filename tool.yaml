@@ -1,0 +1,32 @@
+name: CSV profiler
+description: Profiles one CSV file and shows how many rows, blanks, and sample values each column has.
+tags: [csv, profile, columns, blanks]
+owner: data-platform
+version: 1.0.0
+run:
+  dockerfile: ./Dockerfile
+  command: python profile.py
+inputs:
+  - name: table
+    type: file
+    label: CSV file
+    description: Table to profile
+    bind:
+      as: file
+      path: /inputs/table
+outputs:
+  - name: profile
+    type: table
+    label: Column profile
+    description: Filled cells, blank cells, and a sample value for each column
+    bind:
+      as: file
+      path: /outputs/profile.json
+      format: json
+resources:
+  cpu: 1
+  memory: 2GB
+  gpu: none
+  timeout: 60s
+data_access: none
+sharing: company
